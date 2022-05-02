@@ -18,8 +18,8 @@ public class LifeSteal extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onKill(PlayerDeathEvent e) {
 		
-		getLogger().info("Player wurde getötet");
-	    Player player = e.getEntity();
+		// Hole aktuellen Spieler
+		Player player = e.getEntity();
 		
 		if (player.getKiller() != null) {
 	    	
