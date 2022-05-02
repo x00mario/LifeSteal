@@ -38,7 +38,6 @@ public class LifeSteal extends JavaPlugin implements Listener {
 	    			ChatColor.RED + player.getKiller().getName() + 
 	    			ChatColor.YELLOW + " gained one." );
 	    	}
-	    	
 	    }
 	}
 
