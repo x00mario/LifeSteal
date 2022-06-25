@@ -1,6 +1,7 @@
 package de.cure53.anton.lifesteal;
 
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,7 @@ public class LifeSteal extends JavaPlugin implements Listener {
 	 * Hier registrieren wir, dass ein Spieler einen anderen tötet
 	 * 
 	 * @param e
+	 * @return 
 	 */
 	@EventHandler
 	public void onKill(PlayerDeathEvent e) {
@@ -21,24 +23,30 @@ public class LifeSteal extends JavaPlugin implements Listener {
 		// Hole aktuellen Spieler
 		Player player = e.getEntity();
 		
-		if (player.getKiller() != null) {
-	    	
-			// Wie viele Herzen hat der Killer?
-	    	double killerHearts = player.getKiller().getMaxHealth();
-	    	
-	    	// Wie viele Herzen hat der Gekillte
-	    	double killedHearts = player.getMaxHealth();
-	    	
-	    	// Setze Herzen des Gekillten runter / des Killers hoch
-	    	if (killedHearts >= 10) {
-	    		player.setMaxHealth(killedHearts - 2);
-	    		player.getKiller().setMaxHealth(killerHearts + 2);
-	    		player.sendMessage( 
-	    			ChatColor.YELLOW + "Oh, no, you lost a heart, " + 
-	    			ChatColor.RED + player.getKiller().getName() + 
-	    			ChatColor.YELLOW + " gained one." );
-	    	}
-	    }
+		// Finde aktuelle Welt
+		World world = player.getWorld();
+		
+		// World ist LifeSteal? Let's go!
+		if(world.getName().equals("LifeSteal")) {
+			if (player.getKiller() != null) {
+		    	
+				// Wie viele Herzen hat der Killer?
+		    	double killerHearts = player.getKiller().getMaxHealth();
+		    	
+		    	// Wie viele Herzen hat der Gekillte
+		    	double killedHearts = player.getMaxHealth();
+		    	
+		    	// Setze Herzen des Gekillten runter / des Killers hoch
+		    	if (killedHearts >= 10) {
+		    		player.setMaxHealth(killedHearts - 2);
+		    		player.getKiller().setMaxHealth(killerHearts + 2);
+		    		player.sendMessage( 
+		    			ChatColor.YELLOW + "Oh, no, you lost a heart, " + 
+		    			ChatColor.RED + player.getKiller().getName() + 
+		    			ChatColor.YELLOW + " gained one." );
+		    	}
+		    }
+		}	
 	}
 
 	/**
